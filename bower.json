@@ -1,0 +1,25 @@
+{
+  "name": "terminal-page-view-switcher",
+  "homepage": "https://github.com/sdk-group/terminal-page-view-switcher",
+  "authors": [
+    "artificial-life <proteus.protocol@gmail.com>"
+  ],
+  "description": "page view switcher",
+  "main": "terminal-page-view-switcher.html",
+  "moduleType": [],
+  "keywords": [
+    "terminal",
+    "iris",
+    "views",
+    "service",
+    "groups"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
