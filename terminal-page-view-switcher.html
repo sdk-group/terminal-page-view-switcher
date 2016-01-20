@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="..\..\bower_components\paper-button\paper-button.html">
+<link rel="import" href="..\..\bower_components\paper-icon-button\paper-icon-button.html">
+
+<dom-module id="terminal-page-view-switcher">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <template is="dom-repeat" items="[[views_array]]">
+      <paper-button on-click="selectView">
+        <paper-icon-button icon$="[[item.icon]]"></paper-icon-button>[[item.label]]
+      </paper-button>
+    </template>
+  </template>
+  <script>
+    'use strict'
+    Polymer({
+      is: 'terminal-page-view-switcher',
+      properties: {
+        views: {
+          type: Object,
+          value: {}
+        },
+        selected: {
+          type: Array,
+          notify: true
+        },
+        default: {
+          type: Object,
+          value: 'base'
+        }
+      },
+      observers: ['_viewsChanged(views,default)'],
+      _viewsChanged(views) {
+        let views_array = _.isEmpty(views) ? [] : _.map(views, (view, name) => {
+          return {
+            name: name,
+            label: view.label,
+            icon: view.icon
+          }
+        });
+
+        this.set('views_array', views_array);
+        this.set('selected', views[this.default].items);
+      },
+      selectView(e) {
+        let index = e.model.index;
+        let view_name = this.views_array[index].name;
+        this.set('selected', this.views[view_name].items)
+      }
+    });
+  </script>
+</dom-module>
