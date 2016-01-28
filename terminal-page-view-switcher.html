@@ -26,7 +26,8 @@
           value: {}
         },
         selected: {
-          type: Array,
+          type: Object,
+          value: {},
           notify: true
         },
         default: {
@@ -36,21 +37,27 @@
       },
       observers: ['_viewsChanged(views,default)'],
       _viewsChanged(views) {
-        let views_array = _.isEmpty(views) ? [] : _.map(views, (view, name) => {
+        if (_.isEmpty(views)) return;
+        let views_array = _.map(views, (view, name) => {
+          let root = view.root || {}
           return {
             name: name,
-            label: view.label,
-            icon: view.icon
+            label: root.service_group_label,
+            icon: root.service_group_icon
           }
         });
 
         this.set('views_array', views_array);
-        this.set('selected', views[this.default].items);
+        this.paginate();
+      },
+      paginate(name) {
+        let items = _.mapValues(this.views[name || this.default], (group) => _.chunk(group.service_group_content, group.items_per_page));
+        this.set('selected', items);
       },
       selectView(e) {
         let index = e.model.index;
         let view_name = this.views_array[index].name;
-        this.set('selected', this.views[view_name].items)
+        this.paginate(view_name);
       }
     });
   </script>
