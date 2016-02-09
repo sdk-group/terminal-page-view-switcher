@@ -51,6 +51,7 @@
         this.paginate();
       },
       paginate(name) {
+        // let items = _.mapValues(this.views[name || this.default], (group) => _.chunk(group.service_group_content, group.items_per_page));
         let items = _.mapValues(this.views[name || this.default], (group) => _.chunk(group.content, group.items_per_page));
         this.set('selected', items);
       },
