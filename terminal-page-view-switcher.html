@@ -21,6 +21,11 @@
     Polymer({
       is: 'terminal-page-view-switcher',
       properties: {
+        filter: {
+          type: String,
+          value: 'live',
+          observer: '_filterChange'
+        },
         views: {
           type: Object,
           value: {}
@@ -36,6 +41,9 @@
         }
       },
       observers: ['_viewsChanged(views,default)'],
+      _filterChange(filter) {
+        console.log('View Switcher. filter changed:', filter);
+      },
       _viewsChanged(views) {
         if (_.isEmpty(views)) return;
         let views_array = _.map(views, (view, name) => {
